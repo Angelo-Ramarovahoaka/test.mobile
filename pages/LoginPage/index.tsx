@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Alert, ScrollView } from 'react-native';
 import { Header } from '@/components/Header';
 import { styles } from './styles';
 import { mockUsers } from '@/data/users';
@@ -15,14 +15,14 @@ export const LoginPage = () => {
     
     if (user) {
       Alert.alert('Success', 'Logged in successfully');
-      // navigation.navigate('Home');
+      navigation.navigate('Home');
     } else {
       Alert.alert('Error', 'Invalid email or password');
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Header title="Login" showBackButton={true} onBackPress={() => navigation.goBack()} />
       
       <View style={styles.formContainer}>
@@ -51,6 +51,6 @@ export const LoginPage = () => {
           <Text style={styles.linkText}>Don't have an account? Register</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
