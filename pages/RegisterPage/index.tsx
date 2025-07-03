@@ -67,8 +67,6 @@ export const RegisterPage = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Header title="Register" showBackButton onBackPress={() => navigation.goBack()} />
-      
       <View style={styles.formContainer}>
         <TextInput
           style={[styles.input, errors.name && styles.inputError]}

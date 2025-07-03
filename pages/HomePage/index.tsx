@@ -1,13 +1,19 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import { Header } from '@/components/Header';
-import { ProductCard } from '@/components/ProductCard';
-import { products } from '@/data/products';
+import { View, FlatList, Text, Button } from 'react-native';
+import { Product, products } from '@/data/product';
 import { styles } from './styles';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
+type RootStackParamList = {
+  Home: undefined;
+  ProductDetail: { product: Product };
+};
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
 export const HomePage = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const handleProductPress = (product: Product) => {
     navigation.navigate('ProductDetail', { product });
@@ -15,19 +21,17 @@ export const HomePage = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Home" showUser={true} />
-      
+      <Text>Welcome to the Home Page!</Text>
       <FlatList
         data={products}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <ProductCard 
-            product={item} 
-            onPress={() => handleProductPress(item)} 
-          />
+          <View style={{ marginVertical: 8 }}>
+            <Text>Product Name: {item.name}</Text>
+            <Text>Product Price: ${item.price}</Text>
+            <Button title="View Details" onPress={() => handleProductPress(item)} />
+          </View>
         )}
-        keyExtractor={(item) => item.name}
-        contentContainerStyle={styles.listContent}
-        numColumns={2}
       />
     </View>
   );

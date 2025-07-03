@@ -12,7 +12,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onPress }) =>
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.imageContainer}>
-        <Image source={product.image} style={styles.image} />
+        <Image source={{ uri : product.image}} style={styles.image} />
         {product.discount && (
           <View style={styles.discountBadge}>
             <Text style={styles.discountText}>{product.discount}</Text>

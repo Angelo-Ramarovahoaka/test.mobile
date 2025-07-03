@@ -12,7 +12,7 @@ export interface User {
 export const mockUsers: User[] = [
   {
     id: "1",
-    email: "test@example.com",
+    email: "a@gmail.com",
     name: "John Doe",
     password: "123456"
   }

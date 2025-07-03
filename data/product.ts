@@ -1,11 +1,12 @@
 export interface Product {
+  id : number;
   name: string;
   category: string;
   stock: number;
   description: string;
   price: number;
   currency: string;
-  image: any;
+  image: string;
   isActive: boolean;
   salePrice?: number;
   discount?: string;
@@ -13,6 +14,7 @@ export interface Product {
 
 export const products: Product[] = [
   {
+    id : 1,
     name: "Evening Dress",
     category: "Dorothy Perkins",
     stock: 25,
@@ -20,10 +22,11 @@ export const products: Product[] = [
     salePrice: 12,
     price: 15,
     currency: "$",
-    image: require('@/assets/images/product1.png'),
+    image: require('../assets/images/products/product1.png'),
     isActive: true,
   },
   {
+    id : 2,
     name: "Sport Dress",
     category: "Sitily",
     stock: 15,
@@ -31,29 +34,19 @@ export const products: Product[] = [
     salePrice: 22,
     price: 19,
     currency: "$",
-    image: require('@/assets/images/product2.png'),
+    image: require('@/assets/images/products/product2.png'),
     discount: '-20%',
     isActive: true,
   },
   {
+    id : 3,
     name: "Sport Dress",
     category: "Dorothy Perkins",
     stock: 10,
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt",
     price: 14,
     currency: "$",
-    image: require('@/assets/images/product3.png'),
+    image: require('@/assets/images/products/product3.png'),
     isActive: true,
   },
-  {
-    name: "Light Blouse",
-    category: "Dorothy Perkins",
-    stock: 5,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt",
-    price: 12,
-    currency: "$",
-    image: require('@/assets/images/product4.png'),
-    discount: '-20%',
-    isActive: true,
-  }
 ];

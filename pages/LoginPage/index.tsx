@@ -23,7 +23,6 @@ export const LoginPage = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Header title="Login" showBackButton={true} onBackPress={() => navigation.goBack()} />
       
       <View style={styles.formContainer}>
         <TextInput
