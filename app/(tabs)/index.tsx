@@ -1,32 +1,19 @@
-import { StyleSheet } from 'react-native';
-import { Text } from 'react-native-elements';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { LoginPage } from '@/pages/LoginPage';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { View } from '@/components/Themed';
+const Stack = createNativeStackNavigator();
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    // <NavigationContainer>
+    //   <Stack.Navigator initialRouteName="Login">
+    //     <Stack.Screen name="Login" component={LoginPage} />
+    //     {/* <Stack.Screen name="Register" component={RegisterPage} /> */}
+    //     {/* <Stack.Screen name="Home" component={HomePage} /> */}
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+    <LoginPage />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
