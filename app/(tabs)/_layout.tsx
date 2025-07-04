@@ -1,13 +1,14 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
+import { View, Text, Image } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { red } from 'react-native-reanimated/lib/typescript/Colors';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+// Icon component for tab bar
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
@@ -15,43 +16,74 @@ function TabBarIcon(props: {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
 }
 
+// Header for Home (index) screen
+function HomeHeader() {
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 18, color: '#db3022', flex: 1, textAlign: 'left' }}>
+        CLOTHS STORE
+      </Text>
+      <Image
+        source={{
+          uri: "https://img.freepik.com/photos-gratuite/serieux-jeune-homme-africain-debout-isole_171337-9633.jpg?semt=ais_items_boosted&w=740"
+        }}
+        style={{
+          width: 32,
+          height: 32,
+          borderRadius: 16,
+          marginLeft: 8,
+          backgroundColor: '#ccc'
+        }}
+      />
+    </View>
+  );
+}
+
+// Centered header for other screens
+function CenteredHeader() {
+  return (
+    <Text style={{ fontWeight: 'bold', fontSize: 20, flex: 1, textAlign: 'center', color: '#222' }}>
+      CLOTHS STORE
+    </Text>
+  );
+}
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  
+
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
+          headerTitle: () => <HomeHeader />,
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="Login"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerTitle: () => <CenteredHeader />,
+          tabBarButton: () => null,
+        }}
+      />
+      <Tabs.Screen
+        name="Register"
+        options={{
+          headerTitle: () => <CenteredHeader />,
+          tabBarButton: () => null,
+        }}
+      />
+      <Tabs.Screen
+        name="ProductDetailPage"
+        options={{
+          headerTitle: () => <CenteredHeader />,
+          tabBarButton: () => null,
         }}
       />
     </Tabs>

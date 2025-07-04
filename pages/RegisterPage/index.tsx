@@ -5,6 +5,7 @@ import { styles } from './styles';
 import { userStorage } from '@/data/users';
 import { useNavigation } from '@react-navigation/native';
 import * as Crypto from 'expo-crypto';
+import { Ionicons } from '@expo/vector-icons'; // <-- Add this import
 
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -15,25 +16,24 @@ export const RegisterPage = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // <-- Add this state
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // <-- Add this state
   const navigation = useNavigation();
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
     if (!formData.name.trim()) newErrors.name = 'Name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = 'Invalid email format';
     if (!formData.password) newErrors.password = 'Password is required';
     else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user types
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
@@ -42,28 +42,23 @@ export const RegisterPage = () => {
   const handleRegister = async () => {
     if (!validateForm()) return;
     setIsLoading(true);
-
     try {
       const existingUser = await userStorage.findUserByEmail(formData.email);
       if (existingUser) {
         Alert.alert('Error', 'Email already registered');
+        setIsLoading(false);
         return;
       }
-
-      // Hash the password before saving
       const hashedPassword = await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,
         formData.password
       );
-
       const newUser = {
         name: formData.name,
         email: formData.email,
         password: hashedPassword
       };
-
       await userStorage.addUser(newUser);
-
       Alert.alert('Success', 'Account created successfully', [
         { text: 'OK', onPress: () => navigation.navigate('Login') }
       ]);
@@ -99,22 +94,58 @@ export const RegisterPage = () => {
           />
           {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
-          <TextInput
-            style={[styles.input, errors.password && styles.inputError]}
-            placeholder="Password (min 6 characters)"
-            value={formData.password}
-            onChangeText={(text) => handleInputChange('password', text)}
-            secureTextEntry
-          />
+          {/* Password input with show/hide icon */}
+          <View style={{ position: 'relative' }}>
+            <TextInput
+              style={[styles.input, errors.password && styles.inputError]}
+              placeholder="Password (min 6 characters)"
+              value={formData.password}
+              onChangeText={(text) => handleInputChange('password', text)}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity
+              onPress={() => setShowPassword(!showPassword)}
+              style={{
+                position: 'absolute',
+                right: 15,
+                top: 12,
+                zIndex: 1,
+              }}
+            >
+              <Ionicons
+                name={showPassword ? 'eye-off' : 'eye'}
+                size={22}
+                color="#888"
+              />
+            </TouchableOpacity>
+          </View>
           {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
-          <TextInput
-            style={[styles.input, errors.confirmPassword && styles.inputError]}
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChangeText={(text) => handleInputChange('confirmPassword', text)}
-            secureTextEntry
-          />
+          {/* Confirm Password input with show/hide icon */}
+          <View style={{ position: 'relative' }}>
+            <TextInput
+              style={[styles.input, errors.confirmPassword && styles.inputError]}
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChangeText={(text) => handleInputChange('confirmPassword', text)}
+              secureTextEntry={!showConfirmPassword}
+            />
+            <TouchableOpacity
+              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              style={{
+                position: 'absolute',
+                right: 15,
+                top: 12,
+                zIndex: 1,
+              }}
+            >
+              <Ionicons
+                name={showConfirmPassword ? 'eye-off' : 'eye'}
+                size={22}
+                color="#888"
+              />
+            </TouchableOpacity>
+          </View>
           {errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
 
           <TouchableOpacity 
