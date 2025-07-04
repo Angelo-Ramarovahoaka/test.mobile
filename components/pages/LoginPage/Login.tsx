@@ -4,14 +4,17 @@ import { styles } from './LoginStyle';
 import { userStorage } from '@/data/users';
 import { useNavigation } from '@react-navigation/native';
 import * as Crypto from 'expo-crypto';
-import { Ionicons } from '@expo/vector-icons'; // Add this import
+import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from './AuthContext'; // Add this import
+import { AuthProvider } from './AuthContext'; // Import the AuthProvider
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [users, setUsers] = useState([]);
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
+  const { login } =  useAuth()// Get the login function from AuthContext
 
   useEffect(() => {
     userStorage.getAllUsers().then(setUsers);
@@ -26,9 +29,18 @@ export const LoginPage = () => {
     const user = users.find(
       u => u.email === email && u.password === hashedPassword
     );
-
     if (user) {
-      navigation.navigate('Home');
+      try {
+        // Call the login function from AuthContext
+        await login({
+          name: user.name,
+          email: user.email,
+          imageUri: user.imageUri || '',
+        });
+        navigation.navigate('Home'); // Navigate to Home after successful login
+      } catch (error) {
+        console.error('Login failed:', error.message);
+      }
     } else {
       Alert.alert('Error', 'Invalid email or password');
     }
@@ -84,7 +96,7 @@ export const LoginPage = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={styles.loginLinkText}>
-              Already have an account? <Text style={styles.loginLinkBold}>Register</Text>
+              Don't have an account? <Text style={styles.loginLinkBold}>Register</Text>
             </Text>
           </TouchableOpacity>
         </View>

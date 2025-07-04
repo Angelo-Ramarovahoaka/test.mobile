@@ -59,4 +59,28 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#007bff',
   },
+  imageUploadContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  profileImagePlaceholder: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  imageUploadText: {
+    marginTop: 5,
+    fontSize: 12,
+    color: '#888',
+  },
 });

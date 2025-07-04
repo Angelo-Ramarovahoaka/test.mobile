@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, Alert, ScrollView, ActivityIndicator } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Alert, ScrollView, ActivityIndicator, Image } from 'react-native';
 import { styles } from './RegisterStyle';
 import { userStorage } from '@/data/users';
 import { useNavigation } from '@react-navigation/native';
 import * as Crypto from 'expo-crypto';
-import { Ionicons } from '@expo/vector-icons'; // <-- Add this import
+import * as ImagePicker from 'expo-image-picker';
+import { Ionicons } from '@expo/vector-icons';
 
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    imageUri: '' // Add imageUri to form data
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // <-- Add this state
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // <-- Add this state
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigation = useNavigation();
 
   const validateForm = () => {
@@ -38,6 +40,30 @@ export const RegisterPage = () => {
     }
   };
 
+  const pickImage = async () => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission required', 'We need access to your photos to upload a profile picture.');
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.5,
+      });
+
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        handleInputChange('imageUri', result.assets[0].uri);
+      }
+    } catch (error) {
+      console.error('Image picker error:', error);
+      Alert.alert('Error', 'Failed to pick image. Please try again.');
+    }
+  };
+
   const handleRegister = async () => {
     if (!validateForm()) return;
     setIsLoading(true);
@@ -48,15 +74,19 @@ export const RegisterPage = () => {
         setIsLoading(false);
         return;
       }
+      
       const hashedPassword = await Crypto.digestStringAsync(
         Crypto.CryptoDigestAlgorithm.SHA256,
         formData.password
       );
+      
       const newUser = {
         name: formData.name,
         email: formData.email,
-        password: hashedPassword
+        password: hashedPassword,
+        imageUri: formData.imageUri // Save the image URI with user data
       };
+      
       await userStorage.addUser(newUser);
       Alert.alert('Success', 'Account created successfully', [
         { text: 'OK', onPress: () => navigation.navigate('Login') }
@@ -73,6 +103,18 @@ export const RegisterPage = () => {
     <View style={styles.container}>      
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.formContainer}>
+          {/* Profile Picture Upload */}
+          <TouchableOpacity onPress={pickImage} style={styles.imageUploadContainer}>
+            {formData.imageUri ? (
+              <Image source={{ uri: formData.imageUri }} style={styles.profileImage} />
+            ) : (
+              <View style={styles.profileImagePlaceholder}>
+                <Ionicons name="camera" size={32} color="#888" />
+                <Text style={styles.imageUploadText}>Add Profile</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
           <TextInput
             style={[styles.input, errors.name && styles.inputError]}
             placeholder="Full Name"

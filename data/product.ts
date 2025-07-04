@@ -1,30 +1,31 @@
 export interface Product {
   id : number;
+  userId?: number;
   name: string;
   category: string;
   productCategory: string;
   stock: number;
   description: string;
-  ratingValue: number;
-  totalRating: number;
   price: number;
   currency: string;
   image: string;
   isActive: boolean;
   salePrice?: number;
   discount?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  imageUrl?: string; // Optional for displaying in the UI
 }
 
 export const products: Product[] =[
   {
     "id": 1,
+    "userId": 1,
     "name": "Cotton Hi‑Neck T‑Shirt Black",
     "category": "Son of a Tailor",
     "productCategory": "T‑shirts",
     "stock": 30,
     "description": "Accent neckline, heavy‑weight Supima cotton, made to order in Portugal.",
-    "ratingValue": 4,
-    "totalRating": 120,
     "salePrice": 58,
     "price": 65,
     "currency": "US$",
@@ -33,13 +34,12 @@ export const products: Product[] =[
   },
   {
     "id": 2,
+    "userId": 2,
     "name": "Cotton Hi‑Neck T‑Shirt White",
     "category": "Son of a Tailor",
     "productCategory": "T‑shirts",
     "stock": 25,
     "description": "Classic cut, 100% Supima cotton mid‑weight, side‑slits.",
-    "ratingValue": 5,
-    "totalRating": 200,
     "salePrice": 60,
     "price": 65,
     "currency": "US$",
@@ -48,13 +48,12 @@ export const products: Product[] =[
   },
   {
     "id": 3,
+    "userId": 1,
     "name": "Gildan Heavy Cotton T‑Shirt White",
     "category": "Gildan",
     "productCategory": "T‑shirts",
     "stock": 100,
     "description": "Classic heavyweight crew neck, durable everyday staple.",
-    "ratingValue": 4,
-    "totalRating": 350,
     "salePrice": 6,
     "price": 8,
     "currency": "$",
@@ -63,13 +62,12 @@ export const products: Product[] =[
   },
   {
     "id": 4,
+    "userId": 1,
     "name": "Pro Club Heavyweight Crew Tee",
     "category": "Pro Club",
     "productCategory": "T‑shirts",
     "stock": 80,
     "description": "6.5 oz heavy cotton, relaxed fit crew neck.",
-    "ratingValue": 4.2,
-    "totalRating": 90,
     "salePrice": 7,
     "price": 10,
     "currency": "$",
@@ -78,13 +76,12 @@ export const products: Product[] =[
   },
   {
     "id": 5,
+    "userId": 2,
     "name": "Hanes Essentials Cotton Tee Black",
     "category": "Hanes",
     "productCategory": "T‑shirts",
     "stock": 60,
     "description": "100% cotton essentials tee, tag‑free neck.",
-    "ratingValue": 4.3,
-    "totalRating": 210,
     "salePrice": 5,
     "price": 7,
     "currency": "$",
@@ -93,13 +90,12 @@ export const products: Product[] =[
   },
   {
     "id": 6,
+    "userId": 3,
     "name": "Fuego Cropped Graphic Tee",
     "category": "Fuego Dance",
     "productCategory": "Crop tops",
     "stock": 45,
     "description": "Dropped shoulders, bold gradient logo, preshrunk.",
-    "ratingValue": 4.5,
-    "totalRating": 65,
     "salePrice": 22,
     "price": 25,
     "currency": "$",
@@ -108,13 +104,12 @@ export const products: Product[] =[
   },
   {
     "id": 7,
+    "userId": 3,
     "name": "Ododos Rib‑Knit Crop Tank (3‑Pack)",
     "category": "Ododos",
     "productCategory": "Crop tops",
     "stock": 120,
     "description": "Supportive rib‑knit for workout & lounge, 4‑way stretch.",
-    "ratingValue": 5,
-    "totalRating": 7500,
     "salePrice": 29,
     "price": 58,
     "currency": "$",
@@ -123,13 +118,12 @@ export const products: Product[] =[
   },
   {
     "id": 8,
+    "userId": 4,
     "name": "Primark Transitional Crop Tee",
     "category": "Primark",
     "productCategory": "Crop tops",
     "stock": 200,
     "description": "£4.50 staple crop tee, graphic styles.",
-    "ratingValue": 4,
-    "totalRating": 300,
     "salePrice": 5,
     "price": 5,
     "currency": "£",
@@ -138,13 +132,12 @@ export const products: Product[] =[
   },
   {
     "id": 9,
+    "userId": 4,
     "name": "HELLO MOLLY Trendy Crop Top",
     "category": "Hello Molly",
     "productCategory": "Crop tops",
     "stock": 70,
     "description": "Fashion‑forward crop tops, latest seasonal styles.",
-    "ratingValue": 4.2,
-    "totalRating": 150,
     "salePrice": 35,
     "price": 40,
     "currency": "$",
@@ -153,13 +146,12 @@ export const products: Product[] =[
   },
   {
     "id": 10,
+    "userId": 5,
     "name": "Redbubble Classic T‑Shirt",
     "category": "Redbubble",
     "productCategory": "Blouses",
     "stock": 50,
     "description": "Slim‑fit graphic tee, 100% combed cotton.",
-    "ratingValue": 4,
-    "totalRating": 80,
     "salePrice": 25,
     "price": 28,
     "currency": "$",

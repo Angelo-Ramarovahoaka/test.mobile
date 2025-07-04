@@ -5,6 +5,7 @@ export interface User {
   email: string;
   name: string;
   password: string;
+  imageUri?: string;
 }
 
 const USERS_FILE_PATH = FileSystem.documentDirectory + 'users.json';
@@ -16,13 +17,16 @@ const initialUsers: User[] = [
     id: "1",
     email: "a@gmail.com",
     name: "John Doe",
-    password: "8d969eef6ecad3c29a3a629280e686cff8fab2e5e5d7a0d6a2c24d3aef8b7e7a" // hash of "123456"
+    password: "8d969eef6ecad3c29a3a629280e686cff8fab2e5e5d7a0d6a2c24d3aef8b7e7a", // hash of "123456"
+    imageUri: "./../assets/images/banner/image.png" // Exemple de chemin d'image
   },
   {
     id: "2",
     email: "ra@ra.com",
     name: "rakoto",
-    password: "8d969eef6ecad3c29a3a629280e686cff8fab2e5e5d7a0d6a2c24d3aef8b7e7a" // hash of "123456"
+    password: "8d969eef6ecad3c29a3a629280e686cff8fab2e5e5d7a0d6a2c24d3aef8b7e7a", // hash of "123456"
+    imageUri: "./../assets/images/banner/image.png" // Exemple de chemin d'image
+
   }
 ];
 
