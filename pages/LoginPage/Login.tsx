@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Alert, ScrollView, ImageBackground } from 'react-native';
-import { styles } from './styles';
+import { styles } from './LoginStyle';
 import { userStorage } from '@/data/users';
 import { useNavigation } from '@react-navigation/native';
 import * as Crypto from 'expo-crypto';
@@ -28,7 +28,6 @@ export const LoginPage = () => {
     );
 
     if (user) {
-      Alert.alert('Success', 'Logged in successfully');
       navigation.navigate('Home');
     } else {
       Alert.alert('Error', 'Invalid email or password');

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, FlatList, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Product, products } from '@/data/product';
-import { styles } from './styles';
+import { styles } from './HomeStyle';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';

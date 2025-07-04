@@ -30,7 +30,8 @@ export const myTheme = {
         fontSize: 34,
       },
       h2Style: {
-        fontWeight: '300',
+        fontWeight: '500',
+        fontSize: 20,
       },
       h3Style: {
         fontWeight: '300',

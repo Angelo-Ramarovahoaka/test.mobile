@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'rea
 import { products } from '@/data/product';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { styles } from './styles';
+import { styles } from './ProductDetailStyle';
 
 type RootStackParamList = {
   ProductDetailPage: { id: number };

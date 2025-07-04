@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, Alert, ScrollView, ActivityIndicator } from 'react-native';
-import { Header } from '@/components/Header';
-import { styles } from './styles';
+import { styles } from './RegisterStyle';
 import { userStorage } from '@/data/users';
 import { useNavigation } from '@react-navigation/native';
 import * as Crypto from 'expo-crypto';
