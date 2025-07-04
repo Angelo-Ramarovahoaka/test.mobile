@@ -3,85 +3,70 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8f9fa',
   },
-  content: {
-    padding: 16,
-    paddingBottom: 32,
-  },
-  image: {
+  productImage: {
     width: '100%',
     height: 300,
-    resizeMode: 'contain',
-    borderRadius: 8,
-    backgroundColor: '#fff',
-    marginBottom: 20,
+    resizeMode: 'cover',
   },
-  name: {
+  detailsContainer: {
+    padding: 20,
+  },
+  productName: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    fontWeight: '700',
     color: '#333',
+    marginBottom: 8,
   },
-  category: {
+  productCategory: {
     fontSize: 16,
-    color: '#666',
+    color: '#6c757d',
     marginBottom: 16,
+    textTransform: 'capitalize',
   },
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    gap: 10,
+    gap: 8,
   },
   price: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#2a2a2a',
-  },
-  salePrice: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#FF3E3E',
+    fontWeight: '600',
+    color: '#007AFF',
   },
   originalPrice: {
     fontSize: 18,
-    color: '#999',
+    color: '#6c757d',
     textDecorationLine: 'line-through',
+  },
+  salePrice: {
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#dc3545',
   },
   description: {
     fontSize: 16,
     lineHeight: 24,
-    color: '#444',
+    color: '#495057',
     marginBottom: 20,
   },
   stock: {
     fontSize: 16,
-    color: '#2a2a2a',
+    color: '#28a745',
+    marginBottom: 24,
     fontWeight: '500',
   },
-  // Add these if you want to include action buttons
-  buttonContainer: {
-    flexDirection: 'row',
-    gap: 12,
-    marginTop: 20,
-  },
   addToCartButton: {
-    flex: 1,
-    backgroundColor: '#007bff',
-    padding: 16,
+    backgroundColor: '#007AFF',
     borderRadius: 8,
-    alignItems: 'center',
-  },
-  wishlistButton: {
-    width: 50,
-    backgroundColor: '#f0f0f0',
-    padding: 16,
-    borderRadius: 8,
+    paddingVertical: 14,
     alignItems: 'center',
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
   },
 });

@@ -1,35 +1,58 @@
-import React from 'react';
-import { View, FlatList, Text, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, FlatList, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Product, products } from '@/data/product';
 import { styles } from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 type RootStackParamList = {
   Home: undefined;
-  ProductDetail: { product: Product };
+  ProductDetail: { id: number };
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 export const HomePage = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const screenWidth = Dimensions.get('window').width;
+  const itemWidth = (screenWidth - 36) / 2; // 36 = padding horizontal (16*2) + gap (4)
 
   const handleProductPress = (product: Product) => {
-    navigation.navigate('ProductDetail', { product });
+    navigation.navigate('ProductDetailPage', { id: product.id });
+  };
+
+  const handleDelete = (product: Product) => {
+    console.log('Delete product:', product);
+    // Ajoutez votre logique de suppression ici
   };
 
   return (
     <View style={styles.container}>
-      <Text>Welcome to the Home Page!</Text>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={styles.columnWrapper}
         renderItem={({ item }) => (
-          <View style={{ marginVertical: 8 }}>
-            <Text>Product Name: {item.name}</Text>
-            <Text>Product Price: ${item.price}</Text>
-            <Button title="View Details" onPress={() => handleProductPress(item)} />
+          <View style={[styles.productContainer, { width: itemWidth }]}>
+            <Image source={{uri : item.image}} style={styles.productImage} />
+            <Text style={styles.productName} numberOfLines={1}>{item.name}</Text>
+            <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
+            <View style={styles.productActions}>
+              <TouchableOpacity 
+                onPress={() => handleProductPress(item)}
+                style={styles.actionButton}
+              >
+                <MaterialIcons name="visibility" size={20} color="#007AFF" />
+              </TouchableOpacity>
+              <TouchableOpacity 
+                onPress={() => handleDelete(item)}
+                style={styles.actionButton}
+              >
+                <MaterialIcons name="delete" size={20} color="#FF3B30" />
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />

@@ -1,41 +1,39 @@
-// pages/ProductDetail/index.tsx
 import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { Header } from '@/components/Header';
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { products } from '@/data/product';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { styles } from './styles';
-import { RouteProp } from '@react-navigation/native';
-import { Ionicons as Icon } from '@expo/vector-icons';
 
-// Define the Product type here or import it from your models/types file
-type Product = {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-  salePrice?: number;
-  currency: string;
-  description: string;
-  stock: number;
-  image: string; 
+type RootStackParamList = {
+  ProductDetailPage: { id: number };
+  Home: undefined;
 };
 
-type ProductDetailRouteProp = RouteProp<{ ProductDetail: { product: Product } }, 'ProductDetail'>;
+type ProductDetailRouteProp = RouteProp<RootStackParamList, 'ProductDetailPage'>;
 
-interface ProductDetailProps {
-  route: ProductDetailRouteProp;
-}
-export const ProductDetailPage = ({ route }: ProductDetailProps) => {
-  const { product } = route.params;
+export const ProductDetailPage = () => {
+  const route = useRoute<ProductDetailRouteProp>();
+  const { id } = route.params;
+  
+  // Trouver le produit correspondant à l'ID
+  const product = products.find(p => p.id === id);
+
+  if (!product) {
+    return (
+      <View style={styles.container}>
+        <Text>Produit non trouvé</Text>
+      </View>
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      <Header title="Product Details" showBackButton={true} />
+    <ScrollView style={styles.container}>
+      <Image source={{ uri :product.image}} style={styles.productImage} />
       
-      <ScrollView contentContainerStyle={styles.content}>
-        <Image source={{ uri: product.image }} style={styles.image} />
-        
-        <Text style={styles.name}>{product.name}</Text>
-        <Text style={styles.category}>{product.category}</Text>
+      <View style={styles.detailsContainer}>
+        <Text style={styles.productName}>{product.name}</Text>
+        <Text style={styles.productCategory}>{product.category}</Text>
         
         <View style={styles.priceContainer}>
           {product.salePrice ? (
@@ -49,18 +47,12 @@ export const ProductDetailPage = ({ route }: ProductDetailProps) => {
         </View>
         
         <Text style={styles.description}>{product.description}</Text>
-        <Text style={styles.stock}>In Stock: {product.stock}</Text>
-
-        {/* Action Buttons */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.addToCartButton}>
-            <Text style={styles.buttonText}>Add to Cart</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.wishlistButton}>
-            <Icon name="heart" size={20} color="#666" />
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </View>
+        <Text style={styles.stock}>En stock: {product.stock}</Text>
+        
+        <TouchableOpacity style={styles.addToCartButton}>
+          <Text style={styles.buttonText}>Modifier</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };

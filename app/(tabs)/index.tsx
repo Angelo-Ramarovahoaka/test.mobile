@@ -10,11 +10,11 @@ const Stack = createNativeStackNavigator();
 
 export default function TabOneScreen() {
   return (
-    // <Stack.Navigator initialRouteName="Login">
-    //   <Stack.Screen name="Login" component={LoginPage} />
-    //   <Stack.Screen name="Register" component={RegisterPage} />
-    //   <Stack.Screen name="Home" component={HomePage} />
-    // </Stack.Navigator>
-    <ProductDetailPage />
+    <Stack.Navigator initialRouteName="Register">
+      <Stack.Screen name="Login" component={LoginPage} />
+      <Stack.Screen name="Register" component={RegisterPage} />
+      <Stack.Screen name="Home" component={HomePage} />
+      <Stack.Screen name="ProductDetailPage" component={ProductDetailPage} />
+    </Stack.Navigator>
   );
 }
