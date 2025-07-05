@@ -19,7 +19,8 @@ export function ExternalLink(
           // Open the link in an in-app browser.
           WebBrowser.openBrowserAsync(props.href as string);
         }
-      }}
+      }
+    }
     />
   );
 }

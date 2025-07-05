@@ -16,8 +16,9 @@ export default function TabOneScreen() {
     return null; // Or return a loading spinner
   }
   console.log('User in TabOneScreen:', user);
+  const initialRoute = user ? 'Home' : 'Login';
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRoute}>
       {user ? (
         // Authenticated screens
         <>
@@ -51,45 +52,3 @@ export default function TabOneScreen() {
     </Stack.Navigator>
   );
 }
-
-export const myTheme = {
-  dark: false,
-  colors: {
-    primary: '#E53935',           // Main color for primary actions (e.g., buttons)
-    background: '#FFFFFF',        // Main background
-    card: '#F5F5F5',              // Light gray for category sections
-    text: '#212121',              // Main text color (dark gray/black)
-    border: '#E0E0E0',            // Subtle border color (light gray)
-    notification: '#FF3B30',      // Alerts or important notifications (if any)
-  },
-  Text: {
-      h1Style: {
-        fontWeight: '700',
-        fontSize: 34
-      },
-      h2Style: {
-        fontWeight: '300',
-      },
-      h3Style: {
-        fontWeight: '300',
-        fontSize: 14
-      },
-      h4Style: {
-        fontWeight: '300',
-        fontSize: 11
-      },
-    },
-    Button: {
-      buttonStyle: {
-        backgroundColor: '#DB3022',
-        borderRadius: 25,
-        paddingVertical: 15,
-      },
-      containerStyle: {
-        height: 48,
-      },
-      titleStyle: {
-        fontSize: 14
-      }
-    }
-};

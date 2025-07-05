@@ -31,12 +31,14 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'CLOTHS STORE',
+          href:null,
           headerTitleStyle: {
             fontWeight: myTheme.components.Text.h1Style.fontWeight,
             fontSize: myTheme.components.Text.h2Style.fontSize,
             color: myTheme.colors.secondary,
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          
           headerRight: () => {
             if (!user) return null;
 
@@ -83,12 +85,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: user ? 'Profile' : 'Login', // Dynamic title
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon 
-              name={user ? "user" : "sign-in"} // Different icon based on auth state
-              color={color} 
-            />
+          href:null,
+          //fileter the the 
           ),
         }}
       />
