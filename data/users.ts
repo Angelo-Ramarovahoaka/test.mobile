@@ -125,5 +125,14 @@ export const userStorage = {
       console.error('Erreur lors de la réinitialisation du fichier:', error);
       throw error;
     }
-  }
+  },
+  getUserById: async (id: string): Promise<User | undefined> => {
+    try {
+      const users = await userStorage.getAllUsers();
+      return users.find(user => user.id === id);
+    } catch (error) {
+      console.error('Error finding user:', error);
+      return undefined;
+    }
+  },
 };

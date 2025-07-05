@@ -102,3 +102,7 @@ Visual preview of the application's major screens:
 ### Product Details
 
 ![DetailsProduct](assets/screenshots/DetailsProduct.jpg)
+
+### Log Out Page
+
+![ProfilePage](assets/screenshots/logout.jpg)

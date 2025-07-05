@@ -145,7 +145,7 @@ export const HomePage = () => {
   };
 
   const handleUserPress = (userId: string) => {
-    navigation.navigate('Logout', { userId });
+    navigation.navigate('Profile', { userId });
   };
 
   useEffect(() => {
