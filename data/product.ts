@@ -188,25 +188,62 @@ export const productStorage = {
       return [];
     }
   },
-  // filter products by productCategory, isActive, or price range
+  // Filter products by category, active status, price range, and creation/update dates
   filterProducts: async (filters: {
     productCategory?: string;
     isActive?: boolean;
     minPrice?: number;
     maxPrice?: number;
+    createdAt?: string;   // e.g., "2024-01-01"
+    updatedAt?: string;   // e.g., "2024-07-01"
   }): Promise<Product[]> => {
     try {
       const products = await productStorage.getAllProducts();
+
       return products.filter(product => {
-        const matchesCategory = filters.productCategory ? 
-          product.productCategory === filters.productCategory : true;
-        const matchesActive = filters.isActive !== undefined ? 
-          product.isActive === filters.isActive : true;
-        const matchesPrice = (filters.minPrice !== undefined && product.price >= filters.minPrice) &&
-          (filters.maxPrice !== undefined && product.price <= filters.maxPrice);
-        
-        return matchesCategory && matchesActive && matchesPrice;
+        const {
+          productCategory,
+          isActive,
+          minPrice,
+          maxPrice,
+          createdAt,
+          updatedAt,
+        } = filters;
+
+        const matchesCategory = productCategory
+          ? product.productCategory === productCategory
+          : true;
+
+        const matchesActive = isActive !== undefined
+          ? product.isActive === isActive
+          : true;
+
+        const matchesMinPrice = minPrice !== undefined
+          ? product.price >= minPrice
+          : true;
+
+        const matchesMaxPrice = maxPrice !== undefined
+          ? product.price <= maxPrice
+          : true;
+
+        const matchesCreatedAt = createdAt
+          ? new Date(product.createdAt ?? '') >= new Date(createdAt)
+          : true;
+
+        const matchesUpdatedAt = updatedAt
+          ? new Date(product.updatedAt ?? '') >= new Date(updatedAt)
+          : true;
+
+        return (
+          matchesCategory &&
+          matchesActive &&
+          matchesMinPrice &&
+          matchesMaxPrice &&
+          matchesCreatedAt &&
+          matchesUpdatedAt
+        );
       });
+
     } catch (error) {
       console.error('Erreur lors du filtrage des produits:', error);
       return [];
