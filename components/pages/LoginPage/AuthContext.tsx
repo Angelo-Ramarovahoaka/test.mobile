@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface User {
+  id?: number; 
   name: string;
   email: string;
   imageUri?: string;
@@ -46,6 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     
     // Vérifiez et nettoyez les données
     const userToStore = {
+      id: userData.id, // Conservez l'ID si disponible
       name: userData.name.trim(),
       email: userData.email.trim().toLowerCase(),
       imageUri: userData.imageUri?.trim() || null
@@ -79,7 +81,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  console.log('useAuth context:', context); // Debugging line
+  // console.log('useAuth context:', context); 
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }

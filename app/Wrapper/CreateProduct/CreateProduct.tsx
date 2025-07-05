@@ -14,7 +14,8 @@ import { useAuth } from '@/components/pages/LoginPage/AuthContext';
 import { useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { styles } from './CreateProductStyle'; // Adjust the import path as necessary
-
+import { productStorage } from '@/data/product'; // Assuming you have a productStorage module to handle product data
+// import { useNavigation } from '@react-navigation/native';
 interface Product {
   id: number;
   userId?: number;
@@ -35,7 +36,7 @@ interface Product {
 }
 
 const productCategories = ["T-shirts", "Crop tops", "Blouses", "sport", "Light dress"];
-
+// const navigation = useNavigation()
 const CreateProduct = () => {
   const { user } = useAuth();
   const router = useRouter();
@@ -83,23 +84,30 @@ const CreateProduct = () => {
       return;
     }
 
-    const newProduct: Product = {
+    const newProduct = {
       ...product,
-      id: Math.floor(Math.random() * 10000),
-      userId: user?.id,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      userId: user?.id 
     };
+    // Save the product using your storage method
+    productStorage.addProduct(newProduct)
+      .then(() => {
+        console.log('Product created successfully:', newProduct);
+        router.replace('/(tabs)')
 
-    console.log('New product:', newProduct);
-    Alert.alert('Success', 'Product created successfully');
-    router.back();
+      })
+      .catch((error) => {
+        console.error('Error creating product:', error);
+        Alert.alert('Error', 'Failed to create product. Please try again.');
+      });
+    
   };
 
   return (
-    <ScrollView style={styles.container}>
+    
+    <View style={styles.container}>
       <Text style={styles.header}>Create New Product</Text>
-
+      {console.log('Current user:', user, product)} {/* Debugging line to check user */}
+      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
       {/* Upload Image */}
       <TouchableOpacity style={styles.imageUpload} onPress={pickImage}>
         {image ? (
@@ -252,12 +260,12 @@ const CreateProduct = () => {
           </Text>
         </TouchableOpacity>
       </View>
-
+      </ScrollView>      
       {/* Submit */}
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>Create Product</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 

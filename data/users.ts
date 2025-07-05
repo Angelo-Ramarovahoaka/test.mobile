@@ -14,20 +14,12 @@ console.log('USERS_FILE_PATH:', USERS_FILE_PATH);
 // Données initiales avec tes utilisateurs
 const initialUsers: User[] = [
   {
-    id: "1",
-    email: "a@gmail.com",
-    name: "John Doe",
+    id: "1751692461329",
+    email: "angeloramarovahoaka@gmail.com",
+    name: "Angelo",
     password: "8d969eef6ecad3c29a3a629280e686cff8fab2e5e5d7a0d6a2c24d3aef8b7e7a", // hash of "123456"
-    imageUri: "./../assets/images/banner/image.png" // Exemple de chemin d'image
+    imageUri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Ffood.truck.apk-3661cdb7-2d7d-43a3-a7cb-0139488b1450/ImagePicker/8df10422-2704-4d16-90e5-0a59fd676cd6.jpeg" // Exemple de chemin d'image
   },
-  {
-    id: "2",
-    email: "ra@ra.com",
-    name: "rakoto",
-    password: "8d969eef6ecad3c29a3a629280e686cff8fab2e5e5d7a0d6a2c24d3aef8b7e7a", // hash of "123456"
-    imageUri: "./../assets/images/banner/image.png" // Exemple de chemin d'image
-
-  }
 ];
 
 // Initialise le fichier avec les données de départ si nécessaire
@@ -67,6 +59,19 @@ export const userStorage = {
     } catch (error) {
       console.error('Erreur lors de la lecture des utilisateurs:', error);
       return [...initialUsers];
+    }
+  },
+  deleteAllUsers: async (): Promise<void> => {
+    try {
+      await FileSystem.writeAsStringAsync(
+        USERS_FILE_PATH,
+
+        JSON.stringify([], null, 2) // Réinitialise le fichier avec un tableau vide
+      );
+      console.log('Tous les utilisateurs ont été supprimés');
+    } catch (error) {
+      console.error('Erreur lors de la suppression des utilisateurs:', error);
+      throw error;
     }
   },
 

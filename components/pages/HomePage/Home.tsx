@@ -5,7 +5,7 @@ import { styles } from './HomeStyle';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import { productStorage } from '@/data/product';
 type RootStackParamList = {
   Home: undefined;
   ProductDetail: { id: number };
@@ -26,9 +26,23 @@ export const HomePage = () => {
     console.log('Delete product:', product);
     // Ajoutez votre logique de suppression ici
   };
-
+  // get all products from productStorage
+  const [products, setProducts] = useState<Product[]>([]);
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const allProducts = await productStorage.getAllProducts();
+        setProducts(allProducts);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
+  console.log('Products in HomePage:', products);
   return (
     <View style={styles.container}>
+      
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}

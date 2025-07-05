@@ -25,7 +25,7 @@ export const LoginPage = () => {
       Crypto.CryptoDigestAlgorithm.SHA256,
       password
     );
-
+    
     const user = users.find(
       u => u.email === email && u.password === hashedPassword
     );
@@ -33,6 +33,7 @@ export const LoginPage = () => {
       try {
         // Call the login function from AuthContext
         await login({
+          id: user.id, // Assuming user.id is available
           name: user.name,
           email: user.email,
           imageUri: user.imageUri || '',

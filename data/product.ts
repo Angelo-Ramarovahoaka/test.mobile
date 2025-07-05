@@ -1,6 +1,8 @@
+import * as FileSystem from 'expo-file-system';
+// Define the Product interface
 export interface Product {
   id : number;
-  userId?: number;
+  userId?: string;
   name: string;
   category: string;
   productCategory: string;
@@ -20,7 +22,7 @@ export interface Product {
 export const products: Product[] =[
   {
     "id": 1,
-    "userId": 1,
+    "userId": "1751692461329",
     "name": "Cotton Hi‑Neck T‑Shirt Black",
     "category": "Son of a Tailor",
     "productCategory": "T‑shirts",
@@ -33,106 +35,8 @@ export const products: Product[] =[
     "isActive": true
   },
   {
-    "id": 2,
-    "userId": 2,
-    "name": "Cotton Hi‑Neck T‑Shirt White",
-    "category": "Son of a Tailor",
-    "productCategory": "T‑shirts",
-    "stock": 25,
-    "description": "Classic cut, 100% Supima cotton mid‑weight, side‑slits.",
-    "salePrice": 60,
-    "price": 65,
-    "currency": "US$",
-    "image": "https://m.media-amazon.com/images/I/71MWgi5X10L._UY1000_.jpg", 
-    "isActive": true
-  },
-  {
-    "id": 3,
-    "userId": 1,
-    "name": "Gildan Heavy Cotton T‑Shirt White",
-    "category": "Gildan",
-    "productCategory": "T‑shirts",
-    "stock": 100,
-    "description": "Classic heavyweight crew neck, durable everyday staple.",
-    "salePrice": 6,
-    "price": 8,
-    "currency": "$",
-    "image": "https://avivawholesale.com/cdn/shop/products/flgfapp1000019288_-01_gildan-heavy-cotton-adult-t-shirt-white.jpg?v=1566346635&width=1200", 
-    "isActive": true
-  },
-  {
-    "id": 4,
-    "userId": 1,
-    "name": "Pro Club Heavyweight Crew Tee",
-    "category": "Pro Club",
-    "productCategory": "T‑shirts",
-    "stock": 80,
-    "description": "6.5 oz heavy cotton, relaxed fit crew neck.",
-    "salePrice": 7,
-    "price": 10,
-    "currency": "$",
-    "image": "https://www.hanes.com/images/catalog/catalog/product/H/N/HNS_R5280/HNS_R5280_Black_Front.jpg?width=449", 
-    "isActive": true
-  },
-  {
-    "id": 5,
-    "userId": 2,
-    "name": "Hanes Essentials Cotton Tee Black",
-    "category": "Hanes",
-    "productCategory": "T‑shirts",
-    "stock": 60,
-    "description": "100% cotton essentials tee, tag‑free neck.",
-    "salePrice": 5,
-    "price": 7,
-    "currency": "$",
-    "image": "https://m.media-amazon.com/images/I/71MWgi5X10L._UY1000_.jpg", 
-    "isActive": true
-  },
-  {
-    "id": 6,
-    "userId": 3,
-    "name": "Fuego Cropped Graphic Tee",
-    "category": "Fuego Dance",
-    "productCategory": "Crop tops",
-    "stock": 45,
-    "description": "Dropped shoulders, bold gradient logo, preshrunk.",
-    "salePrice": 22,
-    "price": 25,
-    "currency": "$",
-    "image": "https://images-cdn.ubuy.co.in/6688b8babce9fc5f6e259ecf-crop-tops-sweatshirts-for-women-cute.jpg", 
-    "isActive": true
-  },
-  {
-    "id": 7,
-    "userId": 3,
-    "name": "Ododos Rib‑Knit Crop Tank (3‑Pack)",
-    "category": "Ododos",
-    "productCategory": "Crop tops",
-    "stock": 120,
-    "description": "Supportive rib‑knit for workout & lounge, 4‑way stretch.",
-    "salePrice": 29,
-    "price": 58,
-    "currency": "$",
-    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9vw8tLiqAFbWdNe7h7d9hF-Io1hNjLs7FuB8q0CCmVzmVSIOI7yU31QHEFCOJyqBOLCg&usqp=CAU", 
-    "isActive": true
-  },
-  {
-    "id": 8,
-    "userId": 4,
-    "name": "Primark Transitional Crop Tee",
-    "category": "Primark",
-    "productCategory": "Crop tops",
-    "stock": 200,
-    "description": "£4.50 staple crop tee, graphic styles.",
-    "salePrice": 5,
-    "price": 5,
-    "currency": "£",
-    "image": "https://assets.myntassets.com/w_412,q_60,dpr_2,fl_progressive/assets/images/27684952/2024/2/19/55070187-49ca-4599-bc0c-37c4181bf2d11708340641873BerryBirdCropTop1.jpg", 
-    "isActive": true
-  },
-  {
     "id": 9,
-    "userId": 4,
+    "userId": "1751692461329",
     "name": "HELLO MOLLY Trendy Crop Top",
     "category": "Hello Molly",
     "productCategory": "Crop tops",
@@ -146,7 +50,7 @@ export const products: Product[] =[
   },
   {
     "id": 10,
-    "userId": 5,
+    "userId": "1751692461329",
     "name": "Redbubble Classic T‑Shirt",
     "category": "Redbubble",
     "productCategory": "Blouses",
@@ -159,6 +63,166 @@ export const products: Product[] =[
     "isActive": true
   }
 ]
+const PRODUCTS_FILE_PATH = FileSystem.documentDirectory + 'products.json';
+console.log('PRODUCTS_FILE_PATH:', PRODUCTS_FILE_PATH);
+
+// Initialize the products file with default data if it doesn't exist
+const initializeProductsFile = async () => {
+  try {
+    const fileInfo = await FileSystem.getInfoAsync(PRODUCTS_FILE_PATH);
+    if (!fileInfo.exists) {
+      await FileSystem.writeAsStringAsync(
+        PRODUCTS_FILE_PATH,
+        JSON.stringify(products, null, 2)
+      );
+      console.log('Fichier products.json créé avec les données initiales');
+    }
+  } catch (error) {
+    console.error('Erreur lors de l\'initialisation du fichier:', error);
+  }
+};  
+export const productStorage = {
+  // Get all products including the default products
+  getAllProducts: async (): Promise<Product[]> => {
+    try {
+      await initializeProductsFile();
+      const fileContent = await FileSystem.readAsStringAsync(PRODUCTS_FILE_PATH);
+      const products = JSON.parse(fileContent) as Product[];
+      // Check if the file contains valid data
+      if (!products || products.length === 0) {
+        // If the file is empty, reset it with default data
+        await FileSystem.writeAsStringAsync(
+          PRODUCTS_FILE_PATH,
+          JSON.stringify(products, null, 2)
+        );
+        return products;
+      }
+      return products;
+    } catch (error) {
+      console.error('Erreur lors de la lecture des produits:', error);
+      // Return default products in case of error
+      return [...products];
+    }
+  },
+  // Add a new product
+  addProduct: async (product: Omit<Product, 'id' | 'userId' | 'createdAt' | 'updatedAt'>): Promise<Product> => {
+    try {
+      const products = await productStorage.getAllProducts();
+      const newProduct: Product = {
+        ...product,
+        id: Date.now(), // Generate a unique ID based on current timestamp
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      products.push(newProduct);
+      await FileSystem.writeAsStringAsync(
+        PRODUCTS_FILE_PATH,
+        JSON.stringify(products, null, 2)
+      );
+      return newProduct;
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout du produit:', error);
+      throw error;
+    }
+  },
+  // Delete a product by ID
+  deleteProduct: async (id: number): Promise<void> => {
+    try {
+      const products = await productStorage.getAllProducts();
+      const updatedProducts = products.filter(product => product.id !== id);
+      await FileSystem.writeAsStringAsync(
+        PRODUCTS_FILE_PATH,
+        JSON.stringify(updatedProducts, null, 2)
+      );
+      console.log(`Produit avec l'ID ${id} supprimé`);
+    } catch (error) {
+      console.error('Erreur lors de la suppression du produit:', error);
+      throw error;
+    }
+  },
+  // Update a product by ID
+  updateProduct: async (id: number, updatedProduct: Partial<Product>): Promise<Product |
+  undefined> => {
+    try {
+      const products = await productStorage.getAllProducts();
+      const productIndex = products.findIndex(product => product.id === id);
+      
+      if (productIndex === -1) {
+        console.error(`Produit avec l'ID ${id} non trouvé`);
+        return undefined;
+      }
+      
+      const currentProduct = products[productIndex];
+      const newProduct: Product = {
+        ...currentProduct,
+        ...updatedProduct,
+        updatedAt: new Date().toISOString(),
+      };
+      
+      products[productIndex] = newProduct;
+      await FileSystem.writeAsStringAsync(
+        PRODUCTS_FILE_PATH,
+        JSON.stringify(products, null, 2)
+      );
+      
+      return newProduct;
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du produit:', error);
+      throw error;
+    }
+  },
+  // search products by name,category or productCategory,description
+  searchProducts: async (query: string): Promise<Product[]> => {
+    try {
+      const products = await productStorage.getAllProducts();
+      const lowerCaseQuery = query.toLowerCase();
+      
+      return products.filter(product => 
+        product.name.toLowerCase().includes(lowerCaseQuery) ||
+        product.category.toLowerCase().includes(lowerCaseQuery) ||
+        product.productCategory.toLowerCase().includes(lowerCaseQuery) ||
+        product.description.toLowerCase().includes(lowerCaseQuery)
+      );
+    } catch (error) {
+      console.error('Erreur lors de la recherche des produits:', error);
+      return [];
+    }
+  },
+  // filter products by productCategory, isActive, or price range
+  filterProducts: async (filters: {
+    productCategory?: string;
+    isActive?: boolean;
+    minPrice?: number;
+    maxPrice?: number;
+  }): Promise<Product[]> => {
+    try {
+      const products = await productStorage.getAllProducts();
+      return products.filter(product => {
+        const matchesCategory = filters.productCategory ? 
+          product.productCategory === filters.productCategory : true;
+        const matchesActive = filters.isActive !== undefined ? 
+          product.isActive === filters.isActive : true;
+        const matchesPrice = (filters.minPrice !== undefined && product.price >= filters.minPrice) &&
+          (filters.maxPrice !== undefined && product.price <= filters.maxPrice);
+        
+        return matchesCategory && matchesActive && matchesPrice;
+      });
+    } catch (error) {
+      console.error('Erreur lors du filtrage des produits:', error);
+      return [];
+    }
+  },
+  // Get a product by ID
+  getProductById: async (id: number): Promise<Product | undefined> => {
+    try {
+      const products = await productStorage.getAllProducts();
+      return products.find(product => product.id === id);
+    } catch (error) {
+      console.error('Erreur lors de la récupération du produit:', error);
+      return undefined;
+    }
+  }
+};
 
 
 export const productCategories =  ["All","T-shirts", "Crop tops", "Blouses", "sport", "Light dress"];
