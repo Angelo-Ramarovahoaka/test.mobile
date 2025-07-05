@@ -89,7 +89,7 @@ Visual preview of the application's major screens:
 
 ### Profile Page
 
-![ProfilePage](assets/screenshots/ProfilePage.jpg)
+![ProfilePage](assets/screenshots/profilePage.jpg)
 
 ### Create Product
 
