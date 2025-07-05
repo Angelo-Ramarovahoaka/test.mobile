@@ -1,7 +1,8 @@
 import * as FileSystem from 'expo-file-system';
+
 // Define the Product interface
 export interface Product {
-  id : number;
+  id: number;
   userId?: string;
   name: string;
   category: string;
@@ -16,10 +17,11 @@ export interface Product {
   discount?: string;
   createdAt?: string;
   updatedAt?: string;
-  imageUrl?: string; // Optional for displaying in the UI
+  imageUrl?: string;
 }
 
-export const products: Product[] =[
+// Sample product data
+export const products: Product[] = [
   {
     "id": 1,
     "userId": "1751692461329",
@@ -32,7 +34,9 @@ export const products: Product[] =[
     "price": 65,
     "currency": "US$",
     "image": "https://img.sonofatailor.com/images/customizer/product/highneck/Black_Regular.jpg", 
-    "isActive": true
+    "isActive": true,
+    "createdAt": new Date().toISOString(),
+    "updatedAt": new Date().toISOString()
   },
   {
     "id": 9,
@@ -46,7 +50,9 @@ export const products: Product[] =[
     "price": 40,
     "currency": "$",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9vw8tLiqAFbWdNe7h7d9hF-Io1hNjLs7FuB8q0CCmVzmVSIOI7yU31QHEFCOJyqBOLCg&usqp=CAU", 
-    "isActive": true
+    "isActive": true,
+    "createdAt": new Date().toISOString(),
+    "updatedAt": new Date().toISOString()
   },
   {
     "id": 10,
@@ -60,13 +66,15 @@ export const products: Product[] =[
     "price": 28,
     "currency": "$",
     "image": "https://xcdn.next.co.uk/Common/Items/Default/Default/ItemImages/3_4Ratio/SearchINT/Lge/AJ0879.jpg?im=Resize,width=450", 
-    "isActive": true
+    "isActive": true,
+    "createdAt": new Date().toISOString(),
+    "updatedAt": new Date().toISOString()
   }
-]
-const PRODUCTS_FILE_PATH = FileSystem.documentDirectory + 'products.json';
-console.log('PRODUCTS_FILE_PATH:', PRODUCTS_FILE_PATH);
+];
 
-// Initialize the products file with default data if it doesn't exist
+const PRODUCTS_FILE_PATH = FileSystem.documentDirectory + 'products.json';
+
+// Initialize the products file
 const initializeProductsFile = async () => {
   try {
     const fileInfo = await FileSystem.getInfoAsync(PRODUCTS_FILE_PATH);
@@ -75,191 +83,181 @@ const initializeProductsFile = async () => {
         PRODUCTS_FILE_PATH,
         JSON.stringify(products, null, 2)
       );
-      console.log('Fichier products.json créé avec les données initiales');
+      console.log('Products file created with initial data');
     }
   } catch (error) {
-    console.error('Erreur lors de l\'initialisation du fichier:', error);
+    console.error('Error initializing products file:', error);
+    throw error;
   }
-};  
+};
+
 export const productStorage = {
-  // Get all products including the default products
+  // Get all products
   getAllProducts: async (): Promise<Product[]> => {
     try {
       await initializeProductsFile();
       const fileContent = await FileSystem.readAsStringAsync(PRODUCTS_FILE_PATH);
-      const products = JSON.parse(fileContent) as Product[];
-      // Check if the file contains valid data
-      if (!products || products.length === 0) {
-        // If the file is empty, reset it with default data
+      const storedProducts = JSON.parse(fileContent) as Product[];
+      
+      // Validate loaded products
+      if (!Array.isArray(storedProducts)) {
+        console.warn('Invalid products data, resetting to default');
         await FileSystem.writeAsStringAsync(
           PRODUCTS_FILE_PATH,
           JSON.stringify(products, null, 2)
         );
         return products;
       }
-      return products;
+      
+      return storedProducts;
     } catch (error) {
-      console.error('Erreur lors de la lecture des produits:', error);
-      // Return default products in case of error
-      return [...products];
+      console.error('Error reading products:', error);
+      return [...products]; // Return default products as fallback
     }
   },
+
   // Add a new product
-  addProduct: async (product: Omit<Product, 'id' | 'userId' | 'createdAt' | 'updatedAt'>): Promise<Product> => {
+  addProduct: async (product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>): Promise<Product> => {
     try {
-      const products = await productStorage.getAllProducts();
+      const allProducts = await productStorage.getAllProducts();
       const newProduct: Product = {
         ...product,
-        id: Date.now(), // Generate a unique ID based on current timestamp
+        id: Date.now(), // Generate unique ID
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
-      products.push(newProduct);
+      
+      allProducts.push(newProduct);
       await FileSystem.writeAsStringAsync(
         PRODUCTS_FILE_PATH,
-        JSON.stringify(products, null, 2)
+        JSON.stringify(allProducts, null, 2)
       );
       return newProduct;
     } catch (error) {
-      console.error('Erreur lors de l\'ajout du produit:', error);
+      console.error('Error adding product:', error);
       throw error;
     }
   },
-  // Delete a product by ID
+
+  // Update a product
+  updateProduct: async (updatedProduct: Product): Promise<Product> => {
+    try {
+      if (!updatedProduct?.id || typeof updatedProduct.id !== 'number') {
+        throw new Error('Invalid product ID');
+      }
+
+      const allProducts = await productStorage.getAllProducts();
+      const index = allProducts.findIndex(p => p.id === updatedProduct.id);
+      
+      if (index === -1) {
+        throw new Error(`Product with ID ${updatedProduct.id} not found`);
+      }
+
+      const mergedProduct: Product = {
+        ...allProducts[index],
+        ...updatedProduct,
+        updatedAt: new Date().toISOString()
+      };
+
+      allProducts[index] = mergedProduct;
+      await FileSystem.writeAsStringAsync(
+        PRODUCTS_FILE_PATH,
+        JSON.stringify(allProducts, null, 2)
+      );
+
+      return mergedProduct;
+    } catch (error) {
+      console.error('Error updating product:', error);
+      throw error;
+    }
+  },
+
+  // Delete a product
   deleteProduct: async (id: number): Promise<void> => {
     try {
-      const products = await productStorage.getAllProducts();
-      const updatedProducts = products.filter(product => product.id !== id);
+      const allProducts = await productStorage.getAllProducts();
+      const updatedProducts = allProducts.filter(p => p.id !== id);
+      
+      if (updatedProducts.length === allProducts.length) {
+        throw new Error(`Product with ID ${id} not found`);
+      }
+
       await FileSystem.writeAsStringAsync(
         PRODUCTS_FILE_PATH,
         JSON.stringify(updatedProducts, null, 2)
       );
-      console.log(`Produit avec l'ID ${id} supprimé`);
     } catch (error) {
-      console.error('Erreur lors de la suppression du produit:', error);
+      console.error('Error deleting product:', error);
       throw error;
     }
   },
-  // Update a product by ID
-  updateProduct: async (id: number, updatedProduct: Partial<Product>): Promise<Product |
-  undefined> => {
+
+  // Get product by ID
+  getProductById: async (id: number): Promise<Product | undefined> => {
     try {
-      const products = await productStorage.getAllProducts();
-      const productIndex = products.findIndex(product => product.id === id);
-      
-      if (productIndex === -1) {
-        console.error(`Produit avec l'ID ${id} non trouvé`);
-        return undefined;
-      }
-      
-      const currentProduct = products[productIndex];
-      const newProduct: Product = {
-        ...currentProduct,
-        ...updatedProduct,
-        updatedAt: new Date().toISOString(),
-      };
-      
-      products[productIndex] = newProduct;
-      await FileSystem.writeAsStringAsync(
-        PRODUCTS_FILE_PATH,
-        JSON.stringify(products, null, 2)
-      );
-      
-      return newProduct;
+      const allProducts = await productStorage.getAllProducts();
+      return allProducts.find(p => p.id === id);
     } catch (error) {
-      console.error('Erreur lors de la mise à jour du produit:', error);
-      throw error;
+      console.error('Error finding product:', error);
+      return undefined;
     }
   },
-  // search products by name,category or productCategory,description
+
+  // Search products
   searchProducts: async (query: string): Promise<Product[]> => {
     try {
-      const products = await productStorage.getAllProducts();
-      const lowerCaseQuery = query.toLowerCase();
+      const allProducts = await productStorage.getAllProducts();
+      const lowerQuery = query.toLowerCase();
       
-      return products.filter(product => 
-        product.name.toLowerCase().includes(lowerCaseQuery) ||
-        product.category.toLowerCase().includes(lowerCaseQuery) ||
-        product.productCategory.toLowerCase().includes(lowerCaseQuery) ||
-        product.description.toLowerCase().includes(lowerCaseQuery)
+      return allProducts.filter(p => 
+        p.name.toLowerCase().includes(lowerQuery) ||
+        p.description.toLowerCase().includes(lowerQuery) ||
+        p.productCategory.toLowerCase().includes(lowerQuery)
       );
     } catch (error) {
-      console.error('Erreur lors de la recherche des produits:', error);
+      console.error('Error searching products:', error);
       return [];
     }
   },
-  // Filter products by category, active status, price range, and creation/update dates
+
+  // Filter products
   filterProducts: async (filters: {
     productCategory?: string;
     isActive?: boolean;
     minPrice?: number;
     maxPrice?: number;
-    createdAt?: string;   // e.g., "2024-01-01"
-    updatedAt?: string;   // e.g., "2024-07-01"
   }): Promise<Product[]> => {
     try {
-      const products = await productStorage.getAllProducts();
-
-      return products.filter(product => {
-        const {
-          productCategory,
-          isActive,
-          minPrice,
-          maxPrice,
-          createdAt,
-          updatedAt,
-        } = filters;
-
-        const matchesCategory = productCategory
-          ? product.productCategory === productCategory
-          : true;
-
-        const matchesActive = isActive !== undefined
-          ? product.isActive === isActive
-          : true;
-
-        const matchesMinPrice = minPrice !== undefined
-          ? product.price >= minPrice
-          : true;
-
-        const matchesMaxPrice = maxPrice !== undefined
-          ? product.price <= maxPrice
-          : true;
-
-        const matchesCreatedAt = createdAt
-          ? new Date(product.createdAt ?? '') >= new Date(createdAt)
-          : true;
-
-        const matchesUpdatedAt = updatedAt
-          ? new Date(product.updatedAt ?? '') >= new Date(updatedAt)
-          : true;
-
-        return (
-          matchesCategory &&
-          matchesActive &&
-          matchesMinPrice &&
-          matchesMaxPrice &&
-          matchesCreatedAt &&
-          matchesUpdatedAt
-        );
+      const allProducts = await productStorage.getAllProducts();
+      
+      return allProducts.filter(p => {
+        if (filters.productCategory && p.productCategory !== filters.productCategory) {
+          return false;
+        }
+        if (filters.isActive !== undefined && p.isActive !== filters.isActive) {
+          return false;
+        }
+        if (filters.minPrice !== undefined && p.price < filters.minPrice) {
+          return false;
+        }
+        if (filters.maxPrice !== undefined && p.price > filters.maxPrice) {
+          return false;
+        }
+        return true;
       });
-
     } catch (error) {
-      console.error('Erreur lors du filtrage des produits:', error);
+      console.error('Error filtering products:', error);
       return [];
-    }
-  },
-  // Get a product by ID
-  getProductById: async (id: number): Promise<Product | undefined> => {
-    try {
-      const products = await productStorage.getAllProducts();
-      return products.find(product => product.id === id);
-    } catch (error) {
-      console.error('Erreur lors de la récupération du produit:', error);
-      return undefined;
     }
   }
 };
 
-
-export const productCategories =  ["All","T-shirts", "Crop tops", "Blouses", "sport", "Light dress"];
+// Product categories
+export const productCategories = [
+  "All",
+  "T-shirts", 
+  "Crop tops", 
+  "Blouses", 
+  "Sport", 
+  "Light dress"
+];

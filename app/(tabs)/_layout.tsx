@@ -6,7 +6,7 @@ import { myTheme } from '@/theme';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { useAuth } from '@/components/pages/LoginPage/AuthContext'; 
+import { useAuth } from '@/components/pages/LoginPage/AuthContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -31,14 +31,14 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'CLOTHS STORE',
-          href:null,
+          href: null,
           headerTitleStyle: {
             fontWeight: myTheme.components.Text.h1Style.fontWeight,
             fontSize: myTheme.components.Text.h2Style.fontSize,
             color: myTheme.colors.secondary,
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          
+
           headerRight: () => {
             if (!user) return null;
 
@@ -56,21 +56,20 @@ export default function TabLayout() {
                     )}
                   </Pressable>
                 </Link>
-                <Link 
-                href="/Wrapper/Profile/Profile" asChild>
+                <Link href="/Wrapper/Profile/Profile" asChild>
                   <Pressable>
                     {({ pressed }) => (
                       <Image
-                       source={{
-                            uri: user.imageUri
-                              ? user.imageUri
-                              : 'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=',
-                          }}
-                        style={{ 
-                          width: 30, 
-                          height: 30, 
-                          borderRadius: 15, 
-                          opacity: pressed ? 0.5 : 1
+                        source={{
+                          uri: user.imageUri
+                            ? user.imageUri
+                            : 'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=',
+                        }}
+                        style={{
+                          width: 30,
+                          height: 30,
+                          borderRadius: 15,
+                          opacity: pressed ? 0.5 : 1,
                         }}
                       />
                     )}
@@ -83,11 +82,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="two"
+      name='two'
         options={{
-          href:null,
-          //fileter the the 
-          ),
+          tabBarStyle: { display: 'none' },
         }}
       />
     </Tabs>
