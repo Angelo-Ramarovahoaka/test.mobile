@@ -1,35 +1,41 @@
 import { StyleSheet } from 'react-native';
+import { myTheme } from '@/constants/theme'; // adapte le chemin si besoin
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: myTheme.colors.grey1,
   },
   categoryScrollContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    height: 60,
-  },
-  categoryButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginRight: 8,
-    borderRadius: 20,
-    backgroundColor: '#e9ecef',
-  },
+  paddingHorizontal: 16,
+  paddingVertical: 5, // ajusté pour mieux centrer verticalement
+  // height: 60,
+  backgroundColor: myTheme.colors.grey0,
+},
+
+categoryButton: {
+  paddingHorizontal: 16,
+  height: 40, // fixe
+  justifyContent: 'center', // pour centrer verticalement le texte
+  marginRight: 8,
+  marginBottom: 10,
+  borderRadius: 20,
+  backgroundColor: myTheme.colors.greyOutline,
+},
+
   categoryButtonActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: myTheme.colors.primary,
   },
   categoryButtonText: {
-    color: '#495057',
-    fontSize: 14,
+    color: myTheme.colors.black,
+    fontSize: myTheme.fontSizes.medium,
     fontWeight: '500',
   },
   categoryButtonTextActive: {
-    color: '#ffffff',
+    color: myTheme.colors.white,
   },
   productContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: myTheme.colors.white,
     borderRadius: 12,
     marginBottom: 16,
     overflow: 'hidden',
@@ -51,13 +57,13 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: '#6c757d',
+    backgroundColor: myTheme.colors.grey0,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
   },
   inactiveBadgeText: {
-    color: '#ffffff',
+    color: myTheme.colors.white,
     fontSize: 10,
     fontWeight: 'bold',
   },
@@ -65,9 +71,9 @@ export const styles = StyleSheet.create({
     padding: 12,
   },
   productName: {
-    fontSize: 14,
+    fontSize: myTheme.fontSizes.medium,
     fontWeight: '600',
-    color: '#212529',
+    color: myTheme.colors.black,
     marginBottom: 8,
     lineHeight: 18,
   },
@@ -78,17 +84,17 @@ export const styles = StyleSheet.create({
   productPrice: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#212529',
+    color: myTheme.colors.black,
   },
   salePrice: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#dc3545',
+    color: myTheme.colors.error,
     marginRight: 8,
   },
   originalPrice: {
     fontSize: 14,
-    color: '#6c757d',
+    color: myTheme.colors.grey0,
     textDecorationLine: 'line-through',
   },
   productActions: {
@@ -97,20 +103,18 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     borderTopWidth: 1,
-    borderTopColor: '#e9ecef',
+    borderTopColor: myTheme.colors.greyOutline,
   },
   detailsButton: {
-    display: 'flex',
     flexDirection: 'row',
-    gap: 6,
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 5,
+    backgroundColor: myTheme.colors.primary,
+    paddingHorizontal: 8,
     paddingVertical: 6,
     borderRadius: 4,
   },
   detailsButtonText: {
-    color: '#ffffff',
-    fontSize: 14,
+    color: myTheme.colors.white,
+    fontSize: myTheme.fontSizes.medium,
     fontWeight: '500',
   },
   userButton: {
@@ -119,7 +123,7 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#e9ecef',
+    borderColor: myTheme.colors.greyOutline,
   },
   userImage: {
     width: '100%',
@@ -127,8 +131,7 @@ export const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    // Optional: center content here if needed
   },
   emptyContainer: {
     flex: 1,
@@ -136,8 +139,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: 16,
-    color: '#6c757d',
+    fontSize: myTheme.fontSizes.large,
+    color: myTheme.colors.grey0,
   },
   columnWrapper: {
     justifyContent: 'space-between',
@@ -155,14 +158,14 @@ export const headerStyles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
     paddingVertical: 10,
-    backgroundColor: '#fff',
+    backgroundColor: myTheme.colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: myTheme.colors.greyOutline,
   },
   filterContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: myTheme.colors.grey1,
     borderRadius: 20,
     paddingHorizontal: 5,
     paddingVertical: 5,
@@ -175,15 +178,15 @@ export const headerStyles = StyleSheet.create({
     borderRadius: 15,
   },
   activeFilter: {
-    backgroundColor: '#e1f0ff',
+    backgroundColor: '#e1f0ff', // or use a lighter version of primary if defined
   },
   filterText: {
     marginLeft: 5,
-    fontSize: 14,
-    color: '#666',
+    fontSize: myTheme.fontSizes.medium,
+    color: myTheme.colors.grey0,
   },
   activeFilterText: {
-    color: '#007AFF',
+    color: myTheme.colors.primary,
     fontWeight: '600',
   },
   sortOrderButton: {
@@ -194,7 +197,7 @@ export const headerStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: myTheme.colors.grey1,
     borderRadius: 20,
     paddingHorizontal: 15,
     marginLeft: 10,
@@ -206,7 +209,7 @@ export const headerStyles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: 36,
-    fontSize: 14,
-    color: '#333',
+    fontSize: myTheme.fontSizes.medium,
+    color: myTheme.colors.black,
   },
 });

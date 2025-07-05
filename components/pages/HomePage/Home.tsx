@@ -19,6 +19,7 @@ import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { productStorage, productCategories } from '@/data/product';
 import { userStorage, User } from '@/data/users';
 import { headerStyles } from './HomeStyle';
+import { myTheme } from '@/constants/theme';
 
 
 type RootStackParamList = {
@@ -144,7 +145,7 @@ export const HomePage = () => {
   };
 
   const handleUserPress = (userId: string) => {
-    navigation.navigate('UserProfile', { userId });
+    navigation.navigate('Logout', { userId });
   };
 
   useEffect(() => {
@@ -208,7 +209,7 @@ export const HomePage = () => {
           style={styles.detailsButton}
         >
           <Text style={styles.detailsButtonText}>Details</Text>
-          <MaterialIcons name="chevron-right" size={18} color="#007AFF" />
+          <MaterialIcons name="chevron-right" size={18} color={myTheme.colors.white} />
         </TouchableOpacity>
 
         {/* User Profile Button */}
@@ -245,7 +246,7 @@ export const HomePage = () => {
             <MaterialIcons 
               name="date-range" 
               size={20} 
-              color={sortBy === 'createdAt' ? '#007AFF' : '#666'} 
+              color={sortBy === 'createdAt' ? '#007AFF' : myTheme.colors.grey0} 
             />
             <Text style={[
               headerStyles.filterText,
@@ -265,7 +266,7 @@ export const HomePage = () => {
             <FontAwesome 
               name="dollar" 
               size={20} 
-              color={sortBy === 'price' ? '#007AFF' : '#666'} 
+              color={sortBy === 'price' ? myTheme.colors.warning : '#666'} 
             />
             <Text style={[
               headerStyles.filterText,

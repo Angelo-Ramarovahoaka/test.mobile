@@ -1,10 +1,11 @@
 // RegisterPage/styles.ts
 import { StyleSheet } from 'react-native';
+import { myTheme } from '@/constants/theme'; // adapte le chemin si besoin
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: myTheme.colors.white,
   },
   scrollContent: {
     flexGrow: 1,
@@ -15,36 +16,36 @@ export const styles = StyleSheet.create({
   input: {
     height: 50,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: myTheme.colors.grey0,
     borderRadius: 8,
     paddingHorizontal: 15,
     marginBottom: 10,
-    fontSize: 16,
-    backgroundColor: '#f9f9f9',
+    fontSize: myTheme.fontSizes.large,
+    backgroundColor: myTheme.colors.grey1,
   },
   inputError: {
-    borderColor: '#ff4444',
+    borderColor: myTheme.colors.error,
   },
   errorText: {
-    color: '#ff4444',
+    color: myTheme.colors.error,
     marginBottom: 10,
-    fontSize: 14,
+    fontSize: myTheme.fontSizes.medium,
   },
   button: {
     height: 50,
-    backgroundColor: '#007bff',
-    borderRadius: 8,
+    backgroundColor: myTheme.colors.primary,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
     marginBottom: 15,
   },
   buttonDisabled: {
-    backgroundColor: '#99c6ff',
+    backgroundColor: myTheme.colors.disabled,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: myTheme.colors.white,
+    fontSize: myTheme.components.Button.titleStyle.fontSize,
     fontWeight: 'bold',
   },
   loginLink: {
@@ -52,12 +53,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loginLinkText: {
-    color: '#666',
-    fontSize: 16,
+    color: myTheme.colors.grey0,
+    fontSize: myTheme.fontSizes.large,
   },
   loginLinkBold: {
     fontWeight: 'bold',
-    color: '#007bff',
+    color: myTheme.colors.primary,
   },
   imageUploadContainer: {
     alignItems: 'center',
@@ -72,15 +73,15 @@ export const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: myTheme.colors.grey1,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: myTheme.colors.grey0,
   },
   imageUploadText: {
     marginTop: 5,
-    fontSize: 12,
-    color: '#888',
+    fontSize: myTheme.fontSizes.small,
+    color: myTheme.colors.grey0,
   },
 });

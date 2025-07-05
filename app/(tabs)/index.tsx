@@ -7,6 +7,7 @@ import { ProductDetailPage } from '@/components/pages/ProductDetailPage/ProductD
 import { useAuth } from '@/components/pages/LoginPage/AuthContext';
 import CreateProduct from '../Wrapper/CreateProduct/CreateProduct';
 import { ModifyProduct } from '@/components/pages/ModifyProductPage/ModifyProduct';
+import Logout from '../Wrapper/Logout/Logout';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,8 +33,11 @@ export default function TabOneScreen() {
           <Stack.Screen name="ProductDetailPage">
             {() => <ProductDetailPage user={user} />}
           </Stack.Screen>
-          <Stack.Screen name="Profile">
-            {() => <HomePage user={user} />}
+          {/* <Stack.Screen name="Profile">
+            {() => <Profile user={user} />}
+          </Stack.Screen> */}
+          <Stack.Screen name="Logout">
+            {() => <Logout user={user} />}
           </Stack.Screen>
           <Stack.Screen name="CreateProduct">
             {() => <CreateProduct user={user} />}

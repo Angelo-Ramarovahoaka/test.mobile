@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { myTheme } from '@/constants/theme';// adapte ce chemin si nécessaire
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: myTheme.colors.white,
   },
   productImage: {
     width: '100%',
@@ -18,13 +19,13 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   modifyButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: myTheme.colors.primary,
     padding: 10,
     borderRadius: 30,
     marginRight: 10,
   },
   deleteButton: {
-    backgroundColor: '#FF3B30',
+    backgroundColor: myTheme.colors.error,
     padding: 10,
     borderRadius: 30,
   },
@@ -35,11 +36,11 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 5,
-    color: '#333',
+    color: myTheme.colors.black,
   },
   productCategory: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: myTheme.fontSizes.large,
+    color: myTheme.colors.grey0,
     marginBottom: 15,
   },
   priceContainer: {
@@ -50,41 +51,42 @@ export const styles = StyleSheet.create({
   price: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#000',
+    color: myTheme.colors.black,
   },
   salePrice: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#FF3B30',
+    color: myTheme.colors.error,
     marginRight: 10,
   },
   originalPrice: {
     fontSize: 18,
-    color: '#999',
+    color: myTheme.colors.grey0,
     textDecorationLine: 'line-through',
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: myTheme.fontSizes.large,
     fontWeight: '600',
     marginTop: 20,
     marginBottom: 10,
-    color: '#333',
+    color: myTheme.colors.black,
   },
   description: {
-    fontSize: 16,
+    fontSize: myTheme.fontSizes.medium,
     lineHeight: 24,
-    color: '#666',
+    color: myTheme.colors.grey0,
   },
   stock: {
-    fontSize: 16,
+    fontSize: myTheme.fontSizes.medium,
     fontWeight: '500',
+    color: myTheme.colors.success, // tu peux aussi gérer en condition (vert/rouge)
   },
   ownerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
     padding: 15,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: myTheme.colors.grey1,
     borderRadius: 10,
   },
   ownerImage: {
@@ -99,15 +101,15 @@ export const styles = StyleSheet.create({
   ownerName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333',
+    color: myTheme.colors.black,
   },
   ownerEmail: {
     fontSize: 14,
-    color: '#666',
+    color: myTheme.colors.grey0,
     marginVertical: 3,
   },
   ownerPhone: {
     fontSize: 14,
-    color: '#666',
+    color: myTheme.colors.grey0,
   },
 });

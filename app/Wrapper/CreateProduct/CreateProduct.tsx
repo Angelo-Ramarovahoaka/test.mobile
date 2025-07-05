@@ -106,7 +106,6 @@ const CreateProduct = () => {
     
     <View style={styles.container}>
       <Text style={styles.header}>Create New Product</Text>
-      {console.log('Current user:', user, product)} {/* Debugging line to check user */}
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
       {/* Upload Image */}
       <TouchableOpacity style={styles.imageUpload} onPress={pickImage}>

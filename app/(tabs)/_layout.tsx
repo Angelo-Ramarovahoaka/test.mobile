@@ -2,7 +2,7 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, View, ActivityIndicator, Image } from 'react-native';
-import { myTheme } from '@/theme';
+import { myTheme } from '@/constants/theme';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
@@ -31,13 +31,12 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'CLOTHS STORE',
-          href: null,
           headerTitleStyle: {
             fontWeight: myTheme.components.Text.h1Style.fontWeight,
             fontSize: myTheme.components.Text.h2Style.fontSize,
             color: myTheme.colors.secondary,
           },
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
 
           headerRight: () => {
             if (!user) return null;
@@ -56,7 +55,7 @@ export default function TabLayout() {
                     )}
                   </Pressable>
                 </Link>
-                <Link href="/Wrapper/Profile/Profile" asChild>
+                <Link href="/Wrapper/Logout/Logout" asChild>
                   <Pressable>
                     {({ pressed }) => (
                       <Image
@@ -82,9 +81,11 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-      name='two'
+      name="two"
         options={{
-          tabBarStyle: { display: 'none' },
+          title: 'Tab Two',
+          href: null,
+          tabBarIcon: ({ color }) => <TabBarIcon name="hom" color={color} />,
         }}
       />
     </Tabs>

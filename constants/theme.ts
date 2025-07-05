@@ -1,10 +1,10 @@
 export const myTheme = {
   colors: {
-    primary: '#f2f2f2',
+    primary: '#db3022',
     secondary: '#db3022',
     white: '#fff',
     black: '#222222',
-    grey0: '#9B9B9B',
+    grey0: '#4f4e4e',
     grey1: '#f2f2f2',
     grey2: '#f2f2f2',
     grey3: '#f2f2f2',

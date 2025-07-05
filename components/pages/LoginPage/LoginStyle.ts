@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { myTheme } from '@/theme'; // Adjust the import path as needed
+import { myTheme } from '@/constants/theme'; // Adjust the import path as needed
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,6 +11,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
+  headerContainer: {
+  flex: 1,
+  justifyContent: 'center', // vertically
+  alignItems: 'center',     // horizontally
+  },
+
   headerText: {
     fontSize: myTheme.components.Text.h1Style.fontSize,
     fontWeight: myTheme.components.Text.h3Style.fontWeight,

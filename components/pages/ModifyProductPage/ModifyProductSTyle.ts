@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { myTheme } from "@/constants/theme"; // adapte ce chemin à ton projet
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: myTheme.colors.white,
   },
   contentContainer: {
     padding: 20,
@@ -13,34 +14,34 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#333',
+    color: myTheme.colors.grey0,
     textAlign: 'center',
   },
   inputGroup: {
     marginBottom: 20,
   },
   label: {
-    fontSize: 16,
+    fontSize: myTheme.fontSizes.large,
     fontWeight: '600',
     marginBottom: 8,
-    color: '#333',
+    color: myTheme.colors.black,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: myTheme.colors.greyOutline,
     borderRadius: 8,
     padding: 12,
-    fontSize: 16,
-    backgroundColor: '#fff',
+    fontSize: myTheme.fontSizes.medium,
+    backgroundColor: myTheme.colors.white,
   },
   priceInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   currencySymbol: {
-    fontSize: 16,
+    fontSize: myTheme.fontSizes.medium,
     marginRight: 8,
-    color: '#333',
+    color: myTheme.colors.black,
     fontWeight: '600',
   },
   priceInput: {
@@ -55,7 +56,7 @@ export const styles = StyleSheet.create({
     height: 200,
     borderRadius: 8,
     marginBottom: 16,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: myTheme.colors.grey1,
   },
   imageButtonsContainer: {
     flexDirection: 'row',
@@ -67,16 +68,16 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007AFF',
+    backgroundColor: myTheme.colors.grey0,
     padding: 12,
     borderRadius: 8,
     marginHorizontal: 4,
   },
   cameraButton: {
-    backgroundColor: '#34C759',
+    backgroundColor: myTheme.colors.grey0,
   },
   imageButtonText: {
-    color: '#fff',
+    color: myTheme.colors.white,
     marginLeft: 8,
     fontWeight: '500',
   },
@@ -84,13 +85,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007AFF',
+    backgroundColor: myTheme.colors.grey0,
     padding: 16,
     borderRadius: 8,
     marginTop: 20,
   },
   submitButtonText: {
-    color: '#fff',
+    color: myTheme.colors.white,
     fontSize: 18,
     fontWeight: '600',
     marginLeft: 10,
@@ -99,25 +100,19 @@ export const styles = StyleSheet.create({
     marginVertical: 16,
     paddingHorizontal: 16,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-    color: '#333',
-  },
   statusButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
-    backgroundColor: '#ccc',
+    backgroundColor: myTheme.colors.grey0,
     alignSelf: 'flex-start',
   },
   statusButtonActive: {
-    backgroundColor: '#34C759', // Green for active
+    backgroundColor: myTheme.colors.success,
   },
   statusText: {
-    color: '#fff',
+    color: myTheme.colors.white,
     fontWeight: '600',
-    fontSize: 14,
+    fontSize: myTheme.fontSizes.small,
   },
 });
