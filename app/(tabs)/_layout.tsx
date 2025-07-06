@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs, useRouter, useFocusEffect } from 'expo-router';
-import { StatusBar, TouchableOpacity, View } from 'react-native';
+import { Tabs } from 'expo-router';
+import { StatusBar, ActivityIndicator, View } from 'react-native';
 import { myTheme } from '@/constants/theme';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/app/components/useColorScheme';
@@ -10,13 +10,16 @@ import { useAuth } from '@/app/components/pages/LoginPage/AuthContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const { user, logout } = useAuth();
+  const { user, isLoading } = useAuth();
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // Refresh function that can be called from child components
-  const refreshAllTabs = () => {
-    setRefreshKey(prevKey => prevKey + 1);
-  };
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <React.Fragment>
@@ -25,7 +28,7 @@ export default function TabLayout() {
         backgroundColor={Colors[colorScheme ?? 'light'].background}
       />
       <Tabs
-        key={refreshKey} // This forces remount when refreshKey changes
+        key={refreshKey}
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
           tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
@@ -33,6 +36,7 @@ export default function TabLayout() {
             backgroundColor: Colors[colorScheme ?? 'light'].background,
             borderTopWidth: 0,
             elevation: 0,
+            
           },
           headerShown: useClientOnlyValue(false, true),
           headerStyle: {
@@ -45,55 +49,54 @@ export default function TabLayout() {
           },
         }}
       >
+        {/* Onglet HOME toujours visible */}
         <Tabs.Screen
           name="index"
           options={{
-            title: 'HOME',
+            title: user ? 'HOME' : 'CLOTHS STORE',
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome name="home" color={color} size={size} />
+              user ? <FontAwesome name="home" color={color} size={size} /> : null
+            ),
+            headerTitle: 'CLOTHS STORE',
+            tabBarLabelStyle: {
+              fontSize: 20,                  
+              fontWeight: '600',             
+              marginBottom: 4,        
+            },
+          }}
+          listeners={({ navigation }) => ({
+            tabPress: () => setRefreshKey(prev => prev + 1),
+          })}
+        />
+        
+        {/* Onglet CREATE - seulement visible quand connecté */}
+        <Tabs.Screen
+          name="create"
+          options={{
+            title: 'CREATE',
+            href: user ? '' : null, // Cache l'onglet si non connecté
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="plus-circle" color={color} size={size} />
             ),
             headerTitle: 'CLOTHS STORE',
           }}
           listeners={({ navigation }) => ({
-            tabPress: () => {
-              // Trigger refresh when home tab is pressed
-              setRefreshKey(prevKey => prevKey + 1);
-            },
+            tabPress: () => setRefreshKey(prev => prev + 1),
           })}
         />
-        
-        {user && (
-          <Tabs.Screen
-            name="create"
-            options={{
-              title: 'CREATE',
-              tabBarIcon: ({ color, size }) => (
-                <FontAwesome name="plus-circle" color={color} size={size} />
-              ),
-              headerTitle: 'CLOTHS STORE',
-            }}
-            listeners={({ navigation }) => ({
-              tabPress: () => {
-                // Trigger refresh when create tab is pressed
-                setRefreshKey(prevKey => prevKey + 1);
-              },
-            })}
-          />
-        )}
 
+        {/* Onglet SETTING - seulement visible quand connecté */}
         <Tabs.Screen
           name="setting"
           options={{
             title: 'SETTING',
+            href: user ? '' : null, // Cache l'onglet si non connecté
             tabBarIcon: ({ color, size }) => (
               <FontAwesome name="cog" color={color} size={size} />
             ),
           }}
           listeners={({ navigation }) => ({
-            tabPress: () => {
-              // Trigger refresh when settings tab is pressed
-              setRefreshKey(prevKey => prevKey + 1);
-            },
+            tabPress: () => setRefreshKey(prev => prev + 1),
           })}
         />
       </Tabs>
