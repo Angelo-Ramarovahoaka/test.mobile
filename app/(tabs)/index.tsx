@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginPage } from '@/components/pages/LoginPage/Login';
-import { RegisterPage } from '@/components/pages/RegisterPage/Register';
-import { HomePage } from '@/components/pages/HomePage/Home';
-import { ProductDetailPage } from '@/components/pages/ProductDetailPage/ProductDetail';
-import { useAuth } from '@/components/pages/LoginPage/AuthContext';
-import CreateProduct from '../Wrapper/CreateProduct/CreateProduct';
-import { ModifyProduct } from '@/components/pages/ModifyProductPage/ModifyProduct';
-import Logout from '../Wrapper/Logout/Logout';
-import ProfilePage from '../Wrapper/Profile/Profile';
+import { LoginPage } from '@/app/components/pages/LoginPage/Login';
+import { RegisterPage } from '@/app/components/pages/RegisterPage/Register';
+import { HomePage } from '@/app/components/pages/HomePage/Home';
+import { ProductDetailPage } from '@/app/components/pages/ProductDetailPage/ProductDetail';
+import { useAuth } from '@/app/components/pages/LoginPage/AuthContext';
+import CreateProduct from '../components/pages/CreateProduct/CreateProduct';
+import { ModifyProduct } from '@/app/components/pages/ModifyProductPage/ModifyProduct';
+import Logout from './setting';
+import ProfilePage from '../components/pages/Profile/Profile';
 
 const Stack = createNativeStackNavigator();
 

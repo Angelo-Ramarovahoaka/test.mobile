@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthProvider } from '@/components/pages/LoginPage/AuthContext';
+import { AuthProvider } from '@/app/components/pages/LoginPage/AuthContext';
 import { Stack } from 'expo-router';
 
 function RootLayout() {

@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter, useFocusEffect } from 'expo-router';
 import { StatusBar, TouchableOpacity, View } from 'react-native';
 import { myTheme } from '@/constants/theme';
 import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { useAuth } from '@/components/pages/LoginPage/AuthContext';
+import { useColorScheme } from '@/app/components/useColorScheme';
+import { useClientOnlyValue } from '@/app/components/useClientOnlyValue';
+import { useAuth } from '@/app/components/pages/LoginPage/AuthContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const { user, logout } = useAuth();
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Refresh function that can be called from child components
+  const refreshAllTabs = () => {
+    setRefreshKey(prevKey => prevKey + 1);
+  };
 
   return (
     <React.Fragment>
@@ -19,6 +25,7 @@ export default function TabLayout() {
         backgroundColor={Colors[colorScheme ?? 'light'].background}
       />
       <Tabs
+        key={refreshKey} // This forces remount when refreshKey changes
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
           tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
@@ -47,6 +54,12 @@ export default function TabLayout() {
             ),
             headerTitle: 'CLOTHS STORE',
           }}
+          listeners={({ navigation }) => ({
+            tabPress: () => {
+              // Trigger refresh when home tab is pressed
+              setRefreshKey(prevKey => prevKey + 1);
+            },
+          })}
         />
         
         {user && (
@@ -59,6 +72,12 @@ export default function TabLayout() {
               ),
               headerTitle: 'CLOTHS STORE',
             }}
+            listeners={({ navigation }) => ({
+              tabPress: () => {
+                // Trigger refresh when create tab is pressed
+                setRefreshKey(prevKey => prevKey + 1);
+              },
+            })}
           />
         )}
 
@@ -70,6 +89,12 @@ export default function TabLayout() {
               <FontAwesome name="cog" color={color} size={size} />
             ),
           }}
+          listeners={({ navigation }) => ({
+            tabPress: () => {
+              // Trigger refresh when settings tab is pressed
+              setRefreshKey(prevKey => prevKey + 1);
+            },
+          })}
         />
       </Tabs>
     </React.Fragment>

@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { useAuth } from '@/components/pages/LoginPage/AuthContext';
+import { useAuth } from '@/app/components/pages/LoginPage/AuthContext';
 import { useRouter } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 import { styles } from './CreateProductStyle'; // Adjust the import path as necessary

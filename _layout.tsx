@@ -4,9 +4,9 @@ import { Link, Tabs } from 'expo-router';
 import { Pressable, View, ActivityIndicator, Image } from 'react-native';
 import { myTheme } from '@/constants/theme';
 import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { useAuth } from '@/components/pages/LoginPage/AuthContext';
+import { useColorScheme } from '@/app/components/useColorScheme';
+import { useClientOnlyValue } from '@/app/components/useClientOnlyValue';
+import { useAuth } from '@/app/components/pages/LoginPage/AuthContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
