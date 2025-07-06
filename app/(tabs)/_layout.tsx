@@ -34,7 +34,7 @@ export default function TabLayout() {
           tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
           tabBarStyle: {
             backgroundColor: Colors[colorScheme ?? 'light'].background,
-            borderTopWidth: 0,
+            borderTopWidth: 2,
             elevation: 0,
           },
           headerShown: useClientOnlyValue(false, true),
@@ -57,11 +57,10 @@ export default function TabLayout() {
               user ? <FontAwesome name="home" color={color} size={size} /> : null
             ),
             headerTitle: 'CLOTHS STORE',
-            tabBarLabelStyle: user? '' :{
-              fontSize: 20,                  
-              fontWeight: '600',             
-              marginBottom: 4,        
-            },
+            // tabBarLabelStyle: user? '' :{
+            //   fontSize: 20,                  
+            //   // fontWeight: '600', 
+            // },
           }}
           listeners={({ navigation }) => ({
             tabPress: () => setRefreshKey(prev => prev + 1),
