@@ -36,7 +36,6 @@ export default function TabLayout() {
             backgroundColor: Colors[colorScheme ?? 'light'].background,
             borderTopWidth: 0,
             elevation: 0,
-            
           },
           headerShown: useClientOnlyValue(false, true),
           headerStyle: {
@@ -58,7 +57,7 @@ export default function TabLayout() {
               user ? <FontAwesome name="home" color={color} size={size} /> : null
             ),
             headerTitle: 'CLOTHS STORE',
-            tabBarLabelStyle: {
+            tabBarLabelStyle: user? '' :{
               fontSize: 20,                  
               fontWeight: '600',             
               marginBottom: 4,        

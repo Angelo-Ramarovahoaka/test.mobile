@@ -19,7 +19,9 @@ const Logout = () => {
   const navigation = useNavigation<ProfileNavProp>(); // FIXED: use inside component with correct typing
 
   const handleUserPress = (userId: string) => {
-    router.replace(`/Wrapper/Profile/Profile?userId=${userId}`);
+    // router.replace(`/Profile/Profile?userId=${userId}`);
+    router.replace(`/components/pages/Profile/Profile?userId=${userId}`);
+
   };
 
   const handleLogout = () => {

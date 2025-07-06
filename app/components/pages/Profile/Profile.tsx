@@ -162,19 +162,6 @@ const ProfilePage = () => {
     </>
   );
 
-  const renderEmptyComponent = () => (
-    <View style={styles.emptyContainer}>
-      <FontAwesome name="dropbox" size={40} color="#ddd" />
-      <Text style={styles.emptyText}>No products listed yet</Text>
-      <TouchableOpacity 
-        style={styles.addProductButton}
-        onPress={() => navigation.navigate('AddProduct')}
-      >
-        <Text style={styles.addProductButtonText}>Add Your First Product</Text>
-      </TouchableOpacity>
-    </View>
-  );
-
   if (loading && !refreshing) {
     return (
       <View style={styles.loadingContainer}>
@@ -200,7 +187,6 @@ const ProfilePage = () => {
       columnWrapperStyle={styles.columnWrapper}
       contentContainerStyle={styles.container}
       ListHeaderComponent={renderHeader}
-      ListEmptyComponent={renderEmptyComponent}
       refreshing={refreshing}
       onRefresh={handleRefresh}
       showsVerticalScrollIndicator={false}
